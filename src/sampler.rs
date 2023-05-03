@@ -107,7 +107,10 @@ impl Sampler {
                 Sink::InProgress(mut tx) => {
                     tx.check_irq0();
                     let (ch, rx, sample_mem) = tx.wait();
-                    for chunk in sample_mem.chunks(2).take(self.samples + 1).rev() {
+                    let mut sparse: [u32; 16] = [0; 16];
+                    sparse.copy_from_slice(&sample_mem[0..=7]);
+                    sparse.copy_from_slice(&sample_mem[13..=20]);
+                    for chunk in sparse.chunks(2).take(16).rev() {
                         let s02 = chunk[1].to_le_bytes();
                         let s13 = chunk[0].to_le_bytes();
                         match self.ch_groups {

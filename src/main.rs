@@ -36,6 +36,8 @@ pub const XTAL_FREQ_HZ: u32 = 12_000_000_u32;
 #[used]
 pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
 
+pub const ANALYZER_PIN_MAP: [u8; 16] = [0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17, 18, 19, 20];
+
 #[rtic::app(device = pac, peripherals = true)]
 mod app {
     use super::*;
@@ -111,14 +113,15 @@ mod app {
         pins.gpio5.into_mode::<FunctionPio0>();
         pins.gpio6.into_mode::<FunctionPio0>();
         pins.gpio7.into_mode::<FunctionPio0>();
-        pins.gpio8.into_mode::<FunctionPio0>();
-        pins.gpio9.into_mode::<FunctionPio0>();
-        pins.gpio10.into_mode::<FunctionPio0>();
-        pins.gpio11.into_mode::<FunctionPio0>();
-        pins.gpio12.into_mode::<FunctionPio0>();
+
         pins.gpio13.into_mode::<FunctionPio0>();
         pins.gpio14.into_mode::<FunctionPio0>();
         pins.gpio15.into_mode::<FunctionPio0>();
+        pins.gpio16.into_mode::<FunctionPio0>();
+        pins.gpio17.into_mode::<FunctionPio0>();
+        pins.gpio18.into_mode::<FunctionPio0>();
+        pins.gpio19.into_mode::<FunctionPio0>();
+        pins.gpio20.into_mode::<FunctionPio0>();
 
         let status_led = pins.gpio25.into_push_pull_output();
         let analyzer = LogicAnalyzer::new(usb_dev, serial, pio, sm, dma, status_led);
